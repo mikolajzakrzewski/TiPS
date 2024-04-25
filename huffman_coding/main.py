@@ -12,7 +12,7 @@ if __name__ == '__main__':
                            '\n' + '3 – exit the program' +
                            '\n'))
         if choice == '1':
-            filename = str(input('Enter filename: '))
+            filename = str(input('Enter input file name: '))
             with open(filename, 'r') as input_file:
                 message = str(input_file.read())
 
@@ -27,6 +27,7 @@ if __name__ == '__main__':
             server_socket.bind((host, port))
             server_socket.listen(1)
             client_socket, addr = server_socket.accept()
+            print('Accepted connection from ' + addr[0])
             with open(file_to_send.name, mode='rb') as input_file:
                 data = input_file.read()
                 if not data:
@@ -35,8 +36,10 @@ if __name__ == '__main__':
                     client_socket.send(data)
                     data = input_file.read()
 
+            print('File successfully sent')
             client_socket.close()
             server_socket.close()
+            print('Socket successfully closed')
             file_to_send.close()
 
         elif choice == '2':
@@ -45,6 +48,7 @@ if __name__ == '__main__':
             host = str(input('Enter host to connect to: '))
             port = 8080
             client_socket.connect((host, port))
+            print('Connected to ' + host + ':' + str(port))
             received_file = tempfile.NamedTemporaryFile(delete=False)
             data = client_socket.recv(1024)
             with open(received_file.name, 'wb') as output_file:
@@ -55,9 +59,10 @@ if __name__ == '__main__':
                         output_file.write(data)
                         data = client_socket.recv(1024)
 
+            print('File successfully received')
             min_heap, encoded_message = fu.read_from_file(received_file.name)
             decoded_message = hm.decode_message(min_heap, encoded_message)
-            filename = str(input('Enter filename: '))
+            filename = str(input('Enter output file name: '))
             with open(filename, 'w') as output_file:
                 output_file.write(decoded_message)
 
