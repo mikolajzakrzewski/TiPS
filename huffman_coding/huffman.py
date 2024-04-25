@@ -48,14 +48,21 @@ def encode_message(message):
     root_node = heapq.heappop(min_heap)
     character_codes = {}
     get_character_codes(character_codes, root_node)
+    print('Input message: ' + message)
+    print('Character codes: ')
+    for character in character_codes:
+        print(character + ': ' + character_codes[character])
+
     encoded_message = ''
     for character in message:
         encoded_message += character_codes[character]
 
+    print('Encoded message: ' + encoded_message)
     return encoded_message
 
 
 def decode_message(min_heap, encoded_message):
+    print('Encoded message: ' + encoded_message)
     decoded_message = ''
     root_node = heapq.heappop(min_heap)
     current_node = root_node
@@ -69,4 +76,5 @@ def decode_message(min_heap, encoded_message):
             decoded_message += current_node.character
             current_node = root_node
 
+    print('Decoded message: ' + decoded_message)
     return decoded_message
