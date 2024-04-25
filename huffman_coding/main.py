@@ -42,7 +42,7 @@ if __name__ == '__main__':
         elif choice == '2':
             client_socket = socket.socket()
             print('Socket successfully created')
-            host = ''
+            host = str(input('Enter host to connect to: '))
             port = 8080
             client_socket.connect((host, port))
             received_file = tempfile.NamedTemporaryFile(delete=False)
